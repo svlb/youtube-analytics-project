@@ -13,12 +13,36 @@ class Channel:
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.__channel_id = channel_id
-        self.title = self.youtube_build()['items'][0]['snippet']['title']
-        self.video_count = self.youtube_build()['items'][0]['statistics']['videoCount']
-        self.description = self.youtube_build()['items'][0]['snippet']['description']
-        self.url = self.url_str + self.__channel_id
-        self.subscriber_count = self.youtube_build()['items'][0]['statistics']['subscriberCount']
-        self.view_count = self.youtube_build()['items'][0]['statistics']['viewCount']
+
+
+    def __str__(self):
+        return f'{self.title}({self.url})'
+
+    def __add__(self, other):
+        sum_ = int(self.subscriber_count) + int(other.subscriber_count)
+        return sum_
+
+    def __sub__(self, other):
+        dif = int(self.subscriber_count) - int(other.subscriber_count)
+        return dif
+
+    def __gt__(self, other):
+        return self.subscriber_count > other.subscriber_count
+
+    def __ge__(self, other):
+        return self.subscriber_count >= other.subscriber_count
+
+    def __lt__(self, other):
+        return self.subscriber_count < other.subscriber_count
+
+    def __le__(self, other):
+        return self.subscriber_count <= other.subscriber_count
+
+    def __eq__(self, other):
+        return self.subscriber_count == other.subscriber_count
+
+    def __ne__(self, other):
+        return self.subscriber_count != other.subscriber_count
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
